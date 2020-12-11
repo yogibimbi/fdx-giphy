@@ -34,7 +34,7 @@ describe('AppComponent', () => {
 		for different people. Two spaces is for anal control freaks who want everybody to
 		look the same. If I don't have, to, I don't do spaces indentation, only if company
 		best practices demand it and I get paid for my pain. I am not going to start a
-		revoltuion about it, but here it's my rodeo, so deal with it. It's also one less
+		revolution about it, but here it's my rodeo, so deal with it. It's also one less
 		character per line if I use one tab over two spaces, before code uglification.
 
 		Next: No tests for borderline cases where not deemed necessary. If some punk-ass
