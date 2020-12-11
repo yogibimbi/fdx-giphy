@@ -9,7 +9,8 @@
 	</nav>
 </header>
 
-<div class="results d-flex justify-content-center">
+<div *ngIf="page.items.length" class="results d-flex justify-content-center">
+	search {{ search }}
 	<ul>
 		<li *ngFor="let item of page.items">
 			{{ item }}
@@ -17,10 +18,11 @@
 	</ul>
 </div>
 
-<footer class="d-flex justify-content-center ">
+<footer *ngIf="page.items.length" class="d-flex justify-content-center ">
 	<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items.length"
 		[collectionSize]="result.size"
 		[(page)]="page.index"
+		[(pageSize)]="page.size"
 		[boundaryLinks]="true"
 		aria-label="search result pagination">
 		<ng-template ngbPaginationFirst>|&lt;</ng-template>

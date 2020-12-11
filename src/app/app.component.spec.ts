@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common'; 
-
+import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ describe('AppComponent', () => {
 			imports: [
 				RouterTestingModule,
 				CommonModule,
+				FormsModule,
 				NgbModule
 			],
 			declarations: [
@@ -116,14 +117,41 @@ describe('AppComponent', () => {
 		list.style.height = "300px"
 		results.scrollTop = 1;
 		console.log("scroll", results.scrollTop, list.getBoundingClientRect());
-		// keep the console.log around, it might still be useful
-		// console.log("heights", height(appRoot), height(header), height(results), height(footer));
+
 		expect(results.scrollTop).toEqual(1);
 	});
 
-	// If we don't have a searchword, don't show the list and the footer. Easy.
+	it("if there are no results, don't show the result list", () => {
+		component.page.items = [];
+		fixture.detectChanges();
+		const results = compiled.querySelector('.results');
 
-	// If there is no result, dito.
+		expect(results).toBe(null);
+	});
+
+	it("if there are no results, don't show the footer", () => {
+		component.page.items = [];
+		fixture.detectChanges();
+		const footer = compiled.querySelector('footer');
+
+		expect(footer).toBe(null);
+	});
+
+	it("if there are results, show the result list", () => {
+		component.page.items = [1,2,3,4];
+		fixture.detectChanges();
+		const results = compiled.querySelector('.results');
+
+		expect(results).not.toBe(null);
+	});
+
+	it("if there are results, show the footer", () => {
+		component.page.items = [1,2,3,4,5];
+		fixture.detectChanges();
+		const footer = compiled.querySelector('footer');
+
+		expect(footer).not.toBe(null);
+	});
 
 	// From what I have read about the pagination component, it does not seem to have an
 	// easy way to change the page length. Headscratcher. Maybe I just missed it. If I don't
