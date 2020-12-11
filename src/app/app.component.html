@@ -1,34 +1,33 @@
 <!--thought a router might come in useful during installation; in other words: the installer talked me into it...-->
 <!--router-outlet></router-outlet-->
 
-<div class="page_root">
-	<header class="d-flex justify-content-center ">
-		<nav class="d-flex justify-content-center ">
-			<label>Search term</label>
-			<input type="text"/>
-			<button>Go 4 it!</button>
-		</nav>
-	</header>
+<header class="d-flex justify-content-center ">
+	<nav class="d-flex justify-content-center flex-row">
+		<label>Search term</label>
+		<input type="text"/>
+		<button>Go 4 it!</button>
+	</nav>
+</header>
 
-	<div class="results">
-		<ul>
-			<li *ngFor="let item in items">
-			</li>
-		</ul>
-	</div>
-
-	<footer class="d-flex justify-content-center ">
-		<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items.length"
-			[collectionSize]="result.size"
-			[(page)]="page.index"
-			[boundaryLinks]="true"
-			aria-label="search result pagination">
-			<ng-template ngbPaginationFirst>|&lt;</ng-template>
-			<ng-template ngbPaginationLast>&gt;|</ng-template>
-			<ng-template ngbPaginationPrevious>&lt;</ng-template>
-			<ng-template ngbPaginationNext>&gt;</ng-template>
-			<ng-template ngbPaginationNumber let-p>{{ p }}</ng-template>
-		</ngb-pagination>
-
-	</footer>
+<div class="results d-flex justify-content-center">
+	<ul>
+		<li *ngFor="let item of page.items">
+			{{ item }}
+		</li>
+	</ul>
 </div>
+
+<footer class="d-flex justify-content-center ">
+	<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items.length"
+		[collectionSize]="result.size"
+		[(page)]="page.index"
+		[boundaryLinks]="true"
+		aria-label="search result pagination">
+		<ng-template ngbPaginationFirst>|&lt;</ng-template>
+		<ng-template ngbPaginationLast>&gt;|</ng-template>
+		<ng-template ngbPaginationPrevious>&lt;</ng-template>
+		<ng-template ngbPaginationNext>&gt;</ng-template>
+		<ng-template ngbPaginationNumber let-p>{{ p }}</ng-template>
+	</ngb-pagination>
+
+</footer>
