@@ -3,22 +3,30 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+
+import { ProfanityService } from './profanity.service';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-	let fixture, component, compiled;
+	let fixture, component, compiled, page;
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [
 				RouterTestingModule,
 				CommonModule,
 				FormsModule,
+				HttpClientModule,
 				NgbModule
 			],
 			declarations: [
 				AppComponent
 			],
+			providers: [
+				HttpClient
+			]
 		}).compileComponents();
 	});
 	beforeEach(() => {
@@ -26,6 +34,15 @@ describe('AppComponent', () => {
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 		compiled = fixture.nativeElement;
+		page = {
+			index: 1,
+			items: of([0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]),
+			size: 25,
+			count: 5,
+			ellipses: false,
+			rotation: true
+		};
+		component.page = page;
 	});
 
 	it('should create the app', () => {
@@ -111,7 +128,7 @@ describe('AppComponent', () => {
 		I'll see if that bugs me, if not - hakuna matata.
 	*/
 	it('.results should have a scrollbar if the list is longer than .results', () => {
-		component.page.items = [1,2,3,4,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+		component.page.items = of([1,2,3,4,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 		results.style.height = "200px"
@@ -124,7 +141,7 @@ describe('AppComponent', () => {
 	});
 
 	it('.results should not have a scrollbar if the list is shorter than .results', () => {
-		component.page.items = [1];
+		component.page.items = of([1]);
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 		results.style.height = "200px"
@@ -137,7 +154,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are no results, don't show the result list", () => {
-		component.page.items = [];
+		component.page.items = of([]);
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 
@@ -145,7 +162,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are no results, don't show the footer", () => {
-		component.page.items = [];
+		component.page.items = ([]);
 		fixture.detectChanges();
 		const footer = compiled.querySelector('footer');
 
@@ -153,7 +170,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are results, show the result list", () => {
-		component.page.items = [1,2,3,4];
+		component.page.items = of([1,2,3,4]);
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 
@@ -161,7 +178,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are results, show the footer", () => {
-		component.page.items = [1,2,3,4,5];
+		component.page.items = of([1,2,3,4,5]);
 		fixture.detectChanges();
 		const footer = compiled.querySelector('footer');
 
@@ -172,6 +189,31 @@ describe('AppComponent', () => {
 	// easy way to change the page length. Headscratcher. Maybe I just missed it. If I don't
 	// find it, use 10 results per page also for the giphy API, because that one seems to
 	// have an easier way to set it. Use page length 10 for the max test then.
+	it("there should be 9 elements in the paginator if we are set for max", () => {
+		component.page.total = 200;
+		fixture.detectChanges();
+		const footer = compiled.querySelector('footer');
+		const paginatorItems = footer.querySelectorAll("li.page-item");
+
+		expect(paginatorItems.length).toBe(component.page.count + 4);
+	});
+
+	it("there should be 8 elements in the paginator if we have only 100 elements @ 25 items / page", () => {
+		component.page.total = 100; // this makes it just 4 pages
+		fixture.detectChanges();
+		const footer = compiled.querySelector('footer');
+		const paginatorItems = footer.querySelectorAll("li.page-item");
+
+		expect(paginatorItems.length).toBe(component.page.count - 1 + 4);
+	});
+
+	it("page 2 should be selected if page.indes is 1", () => {
+		component.page.index = 3;
+		fixture.detectChanges();
+		const activePage = compiled.querySelector('footer li.page-item.active');
+
+		expect(activePage.textContent).toBe("3");
+	});
 
 	// Paginate first, previous, and only a window of 5 pages, next and last. If it's there, it's
 	// oK. Don't test for any funny page width / height breakdowns as long as they don't get
@@ -179,10 +221,6 @@ describe('AppComponent', () => {
 	// All other result numbers, widths, etc., as long as there is not something totally
 	// weird going on with the pagination component, we're good. Everything else would
 	// probably require too much digging into the component. Ain't nobody got time 4 dat.
-
-	// Make sure only a max of 5 pages are shown.
-
-	// If there are less pages, show just those less pages in pagination.
 
 	// If it does not pass the profanity test, say something corny and don't give a result.
 	// The API I have chosen gives me 50 attempts per day for my user, so if it works apparetnly,

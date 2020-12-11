@@ -1,0 +1,18 @@
+{
+	"/profanity": {
+		"target": "http://api1-eu.webpurify.com/services/rest",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/profanity": ""
+		}
+	},
+	"/giphy": {
+		"target": "http://api.giphy.com/v1/gifs/search",
+		"secure": false,
+		"changeOrigin": true,
+		"pathRewrite": {
+			"^/giphy": ""
+		}
+	}
+}

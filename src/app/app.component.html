@@ -5,25 +5,26 @@
 	<nav class="d-flex justify-content-center flex-row">
 		<label>Search term</label>
 		<input type="text" [(ngModel)]="search"/>
-		<button>Go 4 it!</button>
+		<button (click)="getSearch()">Go 4 it!</button>
 	</nav>
 </header>
 
-<div *ngIf="page.items.length" class="results d-flex justify-content-center">
+<div *ngIf="page.items" class="results d-flex justify-content-center">
 	<ul>
-		<li *ngFor="let item of page.items">
+		<li *ngFor="let item of page.items | async">
 			{{ item }}
 		</li>
 	</ul>
 </div>
 
-<footer *ngIf="page.items.length" class="d-flex justify-content-center ">
-	<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items.length"
-		[collectionSize]="result.size"
+<footer *ngIf="page.items" class="d-flex justify-content-center ">
+	<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items"
+		[collectionSize]="page.total"
 		[(page)]="page.index"
-		[(pageSize)]="page.size"
+		[pageSize]="page.size"
 		[boundaryLinks]="true"
-		(change)="paginationChange($event)"
+		[maxSize]="page.count" [rotate]="page.rotation" [ellipses]="page.ellipses"
+		(pageChange)="paginationChange($event)"
 		aria-label="search result pagination">
 		<ng-template ngbPaginationFirst>|&lt;</ng-template>
 		<ng-template ngbPaginationLast>&gt;|</ng-template>
