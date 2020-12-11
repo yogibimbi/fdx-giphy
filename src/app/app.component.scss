@@ -29,9 +29,10 @@ header {
 .results {
 	width: 100%;
 	flex: 1;
+	background-color: lime;
 	& > ul {
 		width: 80%;
-		background-color: lime;
+		background-color: lightgrey;
 	}
 	overflow: scroll;
 	margin-bottom: 1em;	
