@@ -1,0 +1,18 @@
+header {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 1em;
+	& > div {
+		width: 80%;
+		label, button {
+			margin: 0 1em 0 1em;
+		}
+	}
+}
+
+footer {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}

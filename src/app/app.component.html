@@ -1,1 +1,29 @@
-<router-outlet></router-outlet>
+<!--thought a router might come in useful during installation; in other words: the installer talked me into it...-->
+<!--router-outlet></router-outlet-->
+
+<header class="d-flex justify-content-center ">
+	<div class="d-flex justify-content-center ">
+		<label>Search term</label>
+		<input type="text"/>
+		<button>Go 4 it!</button>
+	</div>
+</header>
+
+<div class="search result">
+
+</div>
+
+<footer class="d-flex justify-content-center ">
+	<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items.length"
+		[collectionSize]="result.size"
+		[(page)]="page.index"
+		[boundaryLinks]="true"
+		aria-label="search result pagination">
+		<ng-template ngbPaginationFirst>|&lt;</ng-template>
+		<ng-template ngbPaginationLast>&gt;|</ng-template>
+		<ng-template ngbPaginationPrevious>&lt;</ng-template>
+		<ng-template ngbPaginationNext>&gt;</ng-template>
+		<ng-template ngbPaginationNumber let-p>{{ p }}</ng-template>
+	</ngb-pagination>
+
+</footer>
