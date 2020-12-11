@@ -6,11 +6,11 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+	margin: 0;
+	// padding: 0;
 }
 
 header {
-	// position: absolute;
-	// top: 0px;
 	width: 100%;
 	// background-color: yellow;
 	padding: 1em;
@@ -27,20 +27,20 @@ header {
 }
 
 .results {
+	margin: 0;
 	width: 100%;
 	flex: 1;
 	background-color: lime;
 	& > ul {
+		list-style: none;
 		width: 80%;
 		background-color: lightgrey;
 	}
-	overflow: scroll;
+	overflow: auto;
 	margin-bottom: 1em;	
 }
 
 footer {
-	// position: absolute;
-	// bottom: 0px;
 	width: 100%;
 	// background-color: yellow;
 	ngb-pagination {

@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+	let fixture, component, compiled;
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [
@@ -18,6 +19,12 @@ describe('AppComponent', () => {
 				AppComponent
 			],
 		}).compileComponents();
+	});
+	beforeEach(() => {
+		fixture = TestBed.createComponent(AppComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+		compiled = fixture.nativeElement;
 	});
 
 	it('should create the app', () => {
@@ -65,20 +72,18 @@ describe('AppComponent', () => {
 	*/
 
 	it('should extend the search box to fill the header', () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		fixture.detectChanges();
-		const compiled = fixture.nativeElement;
-		let header = compiled.querySelector('header');
-		console.log("header", header);
-		let nav = header.querySelector('nav');
-		let textBox = header.querySelector('input');
+		const header = compiled.querySelector('header');
+		// console.log("header", header);
+		const nav = header.querySelector('nav');
+		const textBox = header.querySelector('input');
 		// margins screw the widths, so let's be rid of them!
 		textBox.style.margin = "0";
-		let button = header.querySelector('button');
-		let label = header.querySelector('label');
-		let width = function(element) {
+		const button = header.querySelector('button');
+		const label = header.querySelector('label');
+		const width = function(element) {
 			return element.getBoundingClientRect().width;
 		}
+		// keep the console.log around, it might still be useful
 		// console.log("widths", width(nav), width(button) + width(textBox) + width(label));
 		// it looks very suspect that the widths actually add up with bazillions of
 		// decimals, but it seems to work ok, so don't round it up yet; but it might be
@@ -86,15 +91,37 @@ describe('AppComponent', () => {
 		expect(width(textBox)).toEqual(width(nav) - (width(button) +  width(label)));
 	});
 
-	// The header shall always be on the top of the window, the footer always on the bottom.
+	it('the vertical elements should all add up to the height of the frame', () => {
+		const appRoot = compiled;
+		const header = appRoot.querySelector('header');
+		const results = appRoot.querySelector('.results');
+		// margins screw the heights, so let's be rid of them!
+		results.style.margin = "0";
+		const footer = appRoot.querySelector('footer');
+		const height = function(element) {
+			return element.getBoundingClientRect().height;
+		}
+		// keep the console.log around, it might still be useful
+		// console.log("heights", height(appRoot), height(header), height(results), height(footer));
+		expect(height(appRoot)).toEqual(height(header) + (height(results) +  height(footer)));
+	});
 
-	// The search viewport always takes up the rest. Unnless the window is 12 pixels or so high.
-	// In that case, I don't care.
+	/* Overflow from the search list auto scrolls: If you make it very narrow or very low,
+		I'll see if that bugs me, if not - hakuna matata.
+	*/
+	it('.results should have a scrollbar if the list is longer than .results', () => {
+		const results = compiled.querySelector('.results');
+		results.style.height = "200px"
+		const list = results.querySelector('ul');
+		list.style.height = "300px"
+		results.scrollTop = 1;
+		console.log("scroll", results.scrollTop, list.getBoundingClientRect());
+		// keep the console.log around, it might still be useful
+		// console.log("heights", height(appRoot), height(header), height(results), height(footer));
+		expect(results.scrollTop).toEqual(1);
+	});
 
-	// Overflow from the search list auto scrolls: If you make it very narrow or very low,
-	// I'll see if that bugs me, if not - hakuna matata.
-
-	// If I don't have a searchword, don't show the list and the footer. Easy.
+	// If we don't have a searchword, don't show the list and the footer. Easy.
 
 	// If there is no result, dito.
 
