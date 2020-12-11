@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common'; 
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [
-				RouterTestingModule
+				RouterTestingModule,
+				CommonModule,
+				NgbModule
 			],
 			declarations: [
 				AppComponent
@@ -28,11 +34,11 @@ describe('AppComponent', () => {
 
 	/* ok, after preliminary study of the APIs and the task, here are the test conditions
 		
-		one basic decision that goes untested and that I adhere to whenevery I remember:
-		indentation is one tab. Don't do 2 spaces. One tab let's everybody choose their
+		one basic decision that goes untested and that I adhere to whenever I remember:
+		indentation is one tab. Don't do 2 spaces. One tab lets everybody choose their
 		level of indentation in the editor without messing with the number of characters
 		for different people. Two spaces is for anal control freaks who want everybody to
-		look the same. If I don't have, to, I don't do spaces indentation, only if company
+		look the same. If I don't have to, I don't do spaces indentation, only if company
 		best practices demand it and I get paid for my pain. I am not going to start a
 		revolution about it, but here it's my rodeo, so deal with it. It's also one less
 		character per line if I use one tab over two spaces, before code uglification.
@@ -52,10 +58,33 @@ describe('AppComponent', () => {
 		So, let's get rolling!
 	*/
 
-	// the text search box shall fill up the rest of the search floexbox until it is
-	// 80% of the entire width. If the viewport becomes too narrow, let's hope for graceful
-	// breakdown. Unless there is something very wild going on, I am not going to sweat
-	// the rest.
+	/* the text search box shall fill up the rest of the search floexbox until it is
+		80% of the entire width. If the viewport becomes too narrow, let's hope for graceful
+		breakdown. Unless there is something totally wild going on, I am not going to sweat
+		the rest.
+	*/
+
+	it('should extend the search box to fill the header', () => {
+		const fixture = TestBed.createComponent(AppComponent);
+		fixture.detectChanges();
+		const compiled = fixture.nativeElement;
+		let header = compiled.querySelector('header');
+		console.log("header", header);
+		let nav = header.querySelector('nav');
+		let textBox = header.querySelector('input');
+		// margins screw the widths, so let's be rid of them!
+		textBox.style.margin = "0";
+		let button = header.querySelector('button');
+		let label = header.querySelector('label');
+		let width = function(element) {
+			return element.getBoundingClientRect().width;
+		}
+		// console.log("widths", width(nav), width(button) + width(textBox) + width(label));
+		// it looks very suspect that the widths actually add up with bazillions of
+		// decimals, but it seems to work ok, so don't round it up yet; but it might be
+		// a source of error in less exact settings, so keep that in mind
+		expect(width(textBox)).toEqual(width(nav) - (width(button) +  width(label)));
+	});
 
 	// The header shall always be on the top of the window, the footer always on the bottom.
 
