@@ -18,4 +18,8 @@ export class AppComponent {
 	result = {
 		size: 30 // still no idea how giphy's API does it, so this is just a placeholder
 	}
+
+	paginationChange(event) {
+		console.log("Pagination", event);
+	}
 }

@@ -10,7 +10,6 @@
 </header>
 
 <div *ngIf="page.items.length" class="results d-flex justify-content-center">
-	search {{ search }}
 	<ul>
 		<li *ngFor="let item of page.items">
 			{{ item }}
@@ -24,6 +23,7 @@
 		[(page)]="page.index"
 		[(pageSize)]="page.size"
 		[boundaryLinks]="true"
+		(change)="paginationChange($event)"
 		aria-label="search result pagination">
 		<ng-template ngbPaginationFirst>|&lt;</ng-template>
 		<ng-template ngbPaginationLast>&gt;|</ng-template>

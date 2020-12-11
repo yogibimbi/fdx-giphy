@@ -111,14 +111,29 @@ describe('AppComponent', () => {
 		I'll see if that bugs me, if not - hakuna matata.
 	*/
 	it('.results should have a scrollbar if the list is longer than .results', () => {
+		component.page.items = [1,2,3,4,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 		results.style.height = "200px"
 		const list = results.querySelector('ul');
 		list.style.height = "300px"
 		results.scrollTop = 1;
-		console.log("scroll", results.scrollTop, list.getBoundingClientRect());
+		console.log("scroll on", results.scrollTop, list.getBoundingClientRect());
 
 		expect(results.scrollTop).toEqual(1);
+	});
+
+	it('.results should not have a scrollbar if the list is shorter than .results', () => {
+		component.page.items = [1];
+		fixture.detectChanges();
+		const results = compiled.querySelector('.results');
+		results.style.height = "200px"
+		const list = results.querySelector('ul');
+		list.style.height = "100px"
+		results.scrollTop = 1;
+		console.log("scroll off", results.scrollTop, list.getBoundingClientRect());
+
+		expect(results.scrollTop).toEqual(0);
 	});
 
 	it("if there are no results, don't show the result list", () => {
