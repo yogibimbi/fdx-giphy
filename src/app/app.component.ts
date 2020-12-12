@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		console.log("Pagination", event);
 		this.page.index = event;
 		this.images.loaded = 0;
-		this.giphy.search(this.search, this.page);
+		this.updateSearch();
 	}
 
 	pageSizeChange(size) {
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.page.size = size;
 		this.page.index = Math.floor(pos / size) + 1;
 		this.images.loaded = 0;
-		this.giphy.search(this.search, this.page);
+		this.updateSearch();
 	}
 
 	getSearch(search) {
@@ -64,6 +64,24 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.page.total = 0;
 		this.page.items = [];
 		this.images.loaded = 0;
+		this.updateSearch();
+	}
+
+	updateSearch() {
+		if (!this.profanity.active) {
+			this.giphy.search(this.search, this.page);
+		}
+		else {
+			this.profanity.setProfanityMessage(this);
+		}		
+	}
+
+	undoSearch() {
+		console.log("undoing search");
+		this.search = this.giphy.currentSearch;
+	}
+
+	profanityCheck() {
 		this.profanity.check(this);
 	}
 

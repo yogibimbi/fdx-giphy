@@ -7,10 +7,11 @@ import { catchError } from 'rxjs/operators';
 	providedIn: 'root'
 })
 export class GiphyService {
-	user = "";
-	key = "CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6";
-	url = "/giphy";	// the rest is done by the proxy configured in angular.json
-	
+	user = '';
+	key = 'CdRKiCMbTnt9CkZTZ0lGukSczk6iT4Z6';
+	url = '/giphy';	// the rest is done by the proxy configured in angular.json
+	currentSearch = '';
+
 	constructor(private http: HttpClient) {
 	}
 
@@ -23,6 +24,7 @@ export class GiphyService {
 				}
 			}
     	).subscribe((data) => {
+    		this.currentSearch = text;
 			console.log("DATA", data);
 			page.total = data['pagination'].total_count;
 			let pics = data['data'];

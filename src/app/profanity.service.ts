@@ -10,6 +10,7 @@ export class ProfanityService {
 	url = '/profanity';	// the rest is done by the proxy configured in angular.json
 	user = 'yogibimbi';
 	key = '6f8fba196ac6f3ab123115463946af91'; // for webpurify
+	active = false;
 
 	constructor(private http: HttpClient) {
 	}
@@ -21,12 +22,7 @@ export class ProfanityService {
 		this.http.get(
 			url
     	).subscribe((data) => {
-			if (data['rsp'].found == 0) {
-				app.giphy.search(app.search, app.page);
-			}
-			else {
-				this.setProfanityMessage(app);
-			}
+    		this.active = data['rsp'].found > 0;
 		});
 	}
 

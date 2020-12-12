@@ -17,7 +17,12 @@ header {
 	& > nav {
 		// background-color: red;
 		width: 80%;
-		label, button {
+		input, button {
+			&.profane {
+				border-color: red;
+				background-color: red;
+				color: white;
+			}
 		}
 		input {
 			flex: 1;

@@ -6,15 +6,19 @@
 		<label for="searchText">Search for…</label>
 		<input
 			id="searchText"
-			class="btn-outline-primary"
+			class="btn-outline-primary profane"
+			[ngClass]="{profane: profanity.active}"
 			type="text"
 			placeholder="kittens?"
 			[(ngModel)]="search"
 			(keyup.enter)="getSearch()"
+			(keyup.escape)="undoSearch()"
+			(keyup)="profanityCheck()"
 		/>
 		<button
 			id="searchButton"
 			class="btn btn-outline-primary"
+			[ngClass]="{profane: profanity.active}"
 			(click)="getSearch()"
 		>
 			…on giphy!
@@ -67,8 +71,8 @@
 		<ng-template ngbPaginationNumber let-p>{{ p }}</ng-template>
 	</ngb-pagination>
 	<div>
-		<ngb-progressbar *ngIf="images.loaded < page.size" type="primary"
-			[value]="100 * (images.loaded / page.size)"
+		<ngb-progressbar *ngIf="images.loaded < page.items.length" type="primary"
+			[value]="100 * (images.loaded / page.items.length)"
 			[striped]="true"
 		></ngb-progressbar>
 	</div>
