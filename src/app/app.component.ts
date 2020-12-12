@@ -47,6 +47,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.giphy.search(this.search, this.page);
 	}
 
+	pageSizeChange(size) {
+		const pos = (this.page.index - 1) * this.page.size;
+		this.page.size = size;
+		this.page.index = Math.floor(pos / size) + 1;
+		this.giphy.search(this.search, this.page);
+	}
+
 	getSearch(search) {
 		// do profanity check
 		if (search) {this.search = search}

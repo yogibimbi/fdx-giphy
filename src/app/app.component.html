@@ -3,21 +3,33 @@
 
 <header class="d-flex justify-content-center ">
 	<nav class="d-flex justify-content-center flex-row">
-		<label>Search for…</label>
-		<input type="text" placeholder="kittens?" [(ngModel)]="search"/>
-		<button (click)="getSearch()">…on giphy!</button>
+		<label for="searchText">Search for…</label>
+		<input id="searchText" class="btn-outline-primary" type="text" placeholder="kittens?" [(ngModel)]="search"/>
+		<button class="btn btn-outline-primary" (click)="getSearch()">…on giphy!</button>
 	</nav>
 </header>
 
 <div *ngIf="page.items" class="results d-flex justify-content-center">
 	<ul>
-		<li *ngFor="let item of page.items">
-			<a [href]="item.link"><img [src]="item.src" height="200" [title]="item.title"/></a>
+		<li *ngFor="let item of page.items; let i = index">
+			<a [href]="item.link" id="items{{page.size * (page.index - 1) + i + 1}}">
+				<img [src]="item.src" height="200" [title]="item.title"/>
+			</a>
 		</li>
 	</ul>
 </div>
 
 <footer *ngIf="page.items" class="d-flex justify-content-center ">
+	<div ngbDropdown class="d-inline-block">
+		<button class="btn btn-outline-primary" id="pageSizeDD" ngbDropdownToggle>{{ page.size }}</button>
+		<div ngbDropdownMenu aria-labelledby="pageSizeDD">
+			<button ngbDropdownItem (click)="pageSizeChange(5)">5</button>
+			<button ngbDropdownItem (click)="pageSizeChange(10)">10</button>
+			<button ngbDropdownItem (click)="pageSizeChange(25)">25</button>
+			<button ngbDropdownItem (click)="pageSizeChange(50)">50</button>
+		</div>
+	</div>
+	<label for="pageSizeDD">images</label>
 	<ngb-pagination class="d-flex justify-content-center" *ngIf="page.items"
 		[collectionSize]="page.total"
 		[(page)]="page.index"
