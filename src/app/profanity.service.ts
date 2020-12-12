@@ -7,27 +7,20 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProfanityService {
-	// url = 'https://neutrinoapi.net/bad-word-filter';
-	url = '/profanity';
+	url = '/profanity';	// the rest is done by the proxy configured in angular.json
 	user = 'yogibimbi';
-	// key = 'xSXzg0WYih6r9k9JeQg32xVS60nzaAYqPjLCOiJX5nfDohgP'; // neutrinoapi
-	key = '6f8fba196ac6f3ab123115463946af91';
+	key = '6f8fba196ac6f3ab123115463946af91'; // for webpurify
 
 	constructor(private http: HttpClient) {
 	}
 
-	check(term: String): Boolean {
-		let url = `${this.url}?method=webpurify.live.check&format=json&api-key=${this.key}&text=${term}`;
-		console.log("URL", url);
+	check(term: String) {
+		let url = `${this.url}?method=webpurify.live.check&format=json&api_key=${this.key}&text=${term}`; // webpurify
+		// console.log("URL", url);
 		this.http.get(
-			url, {
-				headers: {
-					header: "content-type:application/json"
-				}
-			}
+			url
     	).subscribe((data) => {
 			console.log("DATA", data);
 		});
-		return true;
 	}
 }
