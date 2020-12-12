@@ -14,13 +14,32 @@ export class ProfanityService {
 	constructor(private http: HttpClient) {
 	}
 
-	check(term: String) {
+	check(app) {
+		const term = app.search;
 		let url = `${this.url}?method=webpurify.live.check&format=json&api_key=${this.key}&text=${term}`; // webpurify
 		// console.log("URL", url);
 		this.http.get(
 			url
     	).subscribe((data) => {
-			console.log("DATA", data);
+			if (data['rsp'].found == 0) {
+				app.giphy.search(app.search, app.page);
+			}
+			else {
+				const images = [
+					'orly.gif',
+					'mouth.jpg',
+					'soap.gif',
+					'thinking.gif',
+					'seals.gif',
+					'here.gif',
+					'kittens.gif'
+				]
+				const baseUrl = '/assets/images/';
+				app.page.items = images.map(image => {return {
+					src: baseUrl + image,
+					link: 'http://' + window.location.host + "?" + image.replace(/\..*/, '')
+				}});
+			}
 		});
 	}
 }

@@ -4,7 +4,7 @@
 <header class="d-flex justify-content-center ">
 	<nav class="d-flex justify-content-center flex-row">
 		<label>Search for…</label>
-		<input type="text" [(ngModel)]="search"/>
+		<input type="text" placeholder="kittens?" [(ngModel)]="search"/>
 		<button (click)="getSearch()">…on giphy!</button>
 	</nav>
 </header>
@@ -12,7 +12,7 @@
 <div *ngIf="page.items" class="results d-flex justify-content-center">
 	<ul>
 		<li *ngFor="let item of page.items">
-			<a [href]="item.link"><img [src]="item.src" [title]="item.title"/></a>
+			<a [href]="item.link"><img [src]="item.src" height="200" [title]="item.title"/></a>
 		</li>
 	</ul>
 </div>
