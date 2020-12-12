@@ -22,6 +22,8 @@ header {
 		input {
 			flex: 1;
 			margin: 0 1em;
+			padding-left: 1em;
+			padding-right: 1em;
 		}
 	}
 }
@@ -47,14 +49,28 @@ header {
 }
 
 footer {
-	label {
-		padding-top: 0.2em;
-		padding-left: 1em;
+	display: flex;
+	flex-direction: row;
+	& > div {
+		[ngbDropdown] {
+			margin-left: 1em;
+		}
+		width: 20%;
+		display: flex;
+		label {
+			margin: auto 1em;
+			// padding-top: 0.2em;
+			// padding-left: 1em;
+		}
+		ngb-progressbar {
+			margin: auto 1em;
+			width: 100%;
+		}
 	}
 	width: 100%;
 	// background-color: yellow;
 	ngb-pagination {
 		// background-color: red;
-		width: 80%;
+		width: 60%;
 	}
 }

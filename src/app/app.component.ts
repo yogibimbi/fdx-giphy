@@ -23,6 +23,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 		ellipses: false,
 		rotation: true
 	};
+	images = {
+		loaded: 0,
+	}
 
 	constructor (public profanity: ProfanityService, public giphy: GiphyService) {
 
@@ -31,19 +34,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		let search = window.location.search;
 		this.search = search.replace(/^\W*(\w+).*/, "$1");	// trim the garbage a bit
-
 	}
 
 	ngAfterViewInit() {
 		if (this.search) {
 			this.getSearch(this.search);
 		}
-		console.log("QS", this.search);
 	}
 
 	paginationChange(event) {
 		console.log("Pagination", event);
 		this.page.index = event;
+		this.images.loaded = 0;
 		this.giphy.search(this.search, this.page);
 	}
 
@@ -51,6 +53,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		const pos = (this.page.index - 1) * this.page.size;
 		this.page.size = size;
 		this.page.index = Math.floor(pos / size) + 1;
+		this.images.loaded = 0;
 		this.giphy.search(this.search, this.page);
 	}
 
@@ -60,6 +63,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.page.index = 1;
 		this.page.total = 0;
 		this.page.items = [];
+		this.images.loaded = 0;
 		this.profanity.check(this);
+	}
+
+	imageLoading(event) {
+		console.log("LOADING", event);
+		this.images.loaded++;
 	}
 }
