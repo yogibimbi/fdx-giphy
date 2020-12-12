@@ -17,9 +17,10 @@ export class ProfanityService {
 	}
 
 	check(term: String): Boolean {
+		let url = `${this.url}?method=webpurify.live.check&format=json&api-key=${this.key}&text=${term}`;
+		console.log("URL", url);
 		this.http.get(
-			// `${this.url}?user-id=${this.user}&api-key=${this.key}&content=${term}`, {
-			`method=webpurify.live.check&format=json&${this.url}?&api-key=${this.key}&text=${term}`, {
+			url, {
 				headers: {
 					header: "content-type:application/json"
 				}
