@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
@@ -11,7 +11,7 @@ import { GiphyService } from './giphy.service';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
 	title = 'fdx-giphy';
 	search = '';
 	page = {
@@ -28,13 +28,17 @@ export class AppComponent implements AfterViewInit {
 
 	}
 
-	ngAfterViewInit() {
+	ngOnInit() {
 		let search = window.location.search;
-		search = search.replace(/^\W*(\w+).*/, "$1");	// trim the garbage a bit
-		if (search) {
-			this.getSearch(search);
+		this.search = search.replace(/^\W*(\w+).*/, "$1");	// trim the garbage a bit
+
+	}
+
+	ngAfterViewInit() {
+		if (this.search) {
+			this.getSearch(this.search);
 		}
-		console.log("QS", search);
+		console.log("QS", this.search);
 	}
 
 	paginationChange(event) {
