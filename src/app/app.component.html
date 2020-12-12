@@ -11,8 +11,8 @@
 
 <div *ngIf="page.items" class="results d-flex justify-content-center">
 	<ul>
-		<li *ngFor="let item of page.items | async">
-			{{ item }}
+		<li *ngFor="let item of page.items">
+			<a [href]="item.link"><img [src]="item.src" [title]="item.title"/></a>
 		</li>
 	</ul>
 </div>

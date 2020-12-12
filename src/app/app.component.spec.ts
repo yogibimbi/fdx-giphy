@@ -36,7 +36,7 @@ describe('AppComponent', () => {
 		compiled = fixture.nativeElement;
 		page = {
 			index: 1,
-			items: of([0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]),
+			items: [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],
 			size: 25,
 			count: 5,
 			ellipses: false,
@@ -128,7 +128,7 @@ describe('AppComponent', () => {
 		I'll see if that bugs me, if not - hakuna matata.
 	*/
 	it('.results should have a scrollbar if the list is longer than .results', () => {
-		component.page.items = of([1,2,3,4,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+		component.page.items = [1,2,3,4,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 		results.style.height = "200px"
@@ -141,7 +141,7 @@ describe('AppComponent', () => {
 	});
 
 	it('.results should not have a scrollbar if the list is shorter than .results', () => {
-		component.page.items = of([1]);
+		component.page.items = [1];
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 		results.style.height = "200px"
@@ -154,7 +154,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are no results, don't show the result list", () => {
-		component.page.items = of([]);
+		component.page.items = [];
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 
@@ -170,7 +170,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are results, show the result list", () => {
-		component.page.items = of([1,2,3,4]);
+		component.page.items = [1,2,3,4];
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
 
@@ -178,7 +178,7 @@ describe('AppComponent', () => {
 	});
 
 	it("if there are results, show the footer", () => {
-		component.page.items = of([1,2,3,4,5]);
+		component.page.items = [1,2,3,4,5];
 		fixture.detectChanges();
 		const footer = compiled.querySelector('footer');
 
