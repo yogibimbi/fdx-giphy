@@ -34,16 +34,19 @@ export class AppComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		let search = window.location.search;
 		this.search = search.replace(/^\W*(\w+).*/, "$1");	// trim the garbage a bit
+		if (this.search) {
+			this.profanityCheck();
+		}
 	}
 
 	ngAfterViewInit() {
 		if (this.search) {
-			this.getSearch(this.search);
+			// this.profanityCheck();
+			this.updateSearch();
 		}
 	}
 
 	paginationChange(event) {
-		console.log("Pagination", event);
 		this.page.index = event;
 		this.images.loaded = 0;
 		this.updateSearch();
@@ -72,12 +75,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.giphy.search(this.search, this.page);
 		}
 		else {
-			this.profanity.setProfanityMessage(this);
+			this.profanity.setMessage(this);
 		}		
 	}
 
 	undoSearch() {
-		console.log("undoing search");
 		this.search = this.giphy.currentSearch;
 	}
 
@@ -86,7 +88,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	imageLoading(event) {
-		console.log("LOADING", event);
 		this.images.loaded++;
 	}
 }

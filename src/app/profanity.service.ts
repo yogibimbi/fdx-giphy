@@ -26,7 +26,8 @@ export class ProfanityService {
 		});
 	}
 
-	setProfanityMessage(app) {
+	setMessage(app) {	// puts a couple of standard images as a slightly undercover
+						// profanity message out in the results list
 		const images = [
 			'orly.gif',
 			'mouth.jpg',
