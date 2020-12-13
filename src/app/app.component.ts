@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.updateSearch();
 	}
 
-	getSearch(search) {
+	getSearch(search?) {
 		// do profanity check
 		if (search) {this.search = search}
 		this.page.index = 1;
