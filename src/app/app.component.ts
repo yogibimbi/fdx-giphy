@@ -84,9 +84,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.giphy.search(this.search, this.page);
 		}
 		else {
-			this.profanity.getMessage().subscribe(data => {
-				this.page.items = data;
-				this.page.total = data.length;
+			this.profanity.getMessage().subscribe(page => {
+				this.page.items = page.items;
+				this.page.total = page.total;
 			});
 		}		
 	}

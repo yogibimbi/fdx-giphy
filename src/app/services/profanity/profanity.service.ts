@@ -42,6 +42,10 @@ export class ProfanityService {
 			link: 'http://' + window.location.host + "?" + image.replace(/\..*/, ''),
 			title: 'Click this for something more decent. And a better world.'
 		}});
-		return of(items);
+		const page = {
+			items: items,
+			total: items.length
+		}
+		return of(page);
 	}
 }
