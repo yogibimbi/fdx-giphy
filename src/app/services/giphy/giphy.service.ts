@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { from, of, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -14,19 +16,26 @@ export class GiphyService {
 	}
 
 	search(text, page) {
+		let newObs: Observable<any> = new Observable();
 		let url = `${this.url}?&api_key=${this.key}&q=${text}&limit=${page.size}&offset=${(page.index - 1) * page.size}`;
-		this.http.get(
+		return this.http.get(
 			url
-    	).subscribe((data) => {
-    		this.currentSearch = text;
-			page.total = data['pagination'].total_count;
-			let pics = data['data'];
-			page.items = pics.map(pic => { return {
-				src: pic.images.fixed_height.url,
-				link: pic.url,
-				title: pic.title
-			}});
-		});
-
+		).pipe(
+			switchMap(data => {
+				this.currentSearch = text;
+				const total = data['pagination'].total_count;
+				let pics = data['data'];
+				const items = pics.map(pic => { return {
+					src: pic.images.fixed_height.url,
+					link: pic.url,
+					title: pic.title
+				}});
+				const page = {
+					total: total,
+					items: items
+				}
+				return of(page);
+			})
+		);
 	}
 }

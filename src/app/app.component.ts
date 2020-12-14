@@ -81,7 +81,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	updateSearch() {
 		if (!this.profanity.active) {
-			this.giphy.search(this.search, this.page);
+			this.giphy.search(this.search, this.page).subscribe(page => {
+				this.page.total = page.total;
+				this.page.items = page.items;
+			})
 		}
 		else {
 			this.profanity.getMessage().subscribe(page => {
