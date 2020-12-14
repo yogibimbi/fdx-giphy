@@ -1,7 +1,8 @@
 <!--thought a router might come in useful during installation; in other words: the installer talked me into it...-->
 <!--router-outlet></router-outlet-->
 
-<header class="d-flex justify-content-center ">
+<header class="d-flex ">
+	<div></div>
 	<nav class="d-flex justify-content-center flex-row">
 		<label for="searchText">Search for…</label>
 		<input
@@ -24,6 +25,32 @@
 			…on giphy!
 		</button>
 	</nav>
+	<div ngbDropdown>
+		<button ngbDropdownToggle
+			id="infoButton"
+			class="btn btn-outline-primary info"
+		>
+			info
+		</button>
+	     <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+	      	<div class="content-wrapper">
+	      		<p>The absolute final user manual</p>
+
+	      		<ol>
+	      			<li>Typing text in the search box is evaluated for profanity as you type. Be nice! If it turns red, you are not being nice. When you submit the search, the app will let you know if you are not being nice.<br/>The app uses a service called webpurify to decide what is nice and what is not. Take it up with them if you think they are being picky!</li>
+
+	      			<li>Submitting a search happens by either hitting "enter" while in the search box, or pressing the button.</li>
+
+	      			<li>If you did type something nice and there are results, they will be displayed as items in a vertical list. Hovering over them displays the text giphy has for them in their database, clicking on them will bring you to their giphy-page. If there are more images than fits in the viewport, you can scroll.</li>
+
+	      			<li>If you were not nice, there will also be results. Just not the ones you expected, probably. That is why they might better be called "consequences" instead of "results". But, in general, they will function as described before.</li>
+
+	      			<li>In the "images" pulldown in the bottom left corner you can select how many images will be displayed on one result page. Default is 10. More images take longer. Duh. In the right bottom corner is a progress bar which informs you how much longer you have to wait for completion while stuff is still loading.</li>
+
+	      		</ol>
+	      	</div>
+	      </div>
+	</div>
 </header>
 
 <div *ngIf="page.items.length" class="results d-flex justify-content-center">

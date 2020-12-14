@@ -14,6 +14,31 @@ header {
 	width: 100%;
 	// background-color: yellow;
 	padding: 1em;
+	& > div {
+		width: 10%;
+		display: flex;
+		.info {
+			margin-left: auto; // quick fix to move item to the right
+			width: 50px; 
+            height: 50px; 
+            padding: 6px 0px; 
+            border-radius: 25px; 
+            text-align: center;
+        }
+        .dropdown-toggle::after {
+        	margin-left: -0.2em;
+        }
+        [ngbDropdownMenu] {
+        	overflow: hidden;
+        	.content-wrapper {
+        		width: 50rem;
+        		padding-left: 1em;
+        		padding-right: 1em;
+        		overflow: auto;
+        		font-size: -1em;
+        	}
+        }
+	}
 	& > nav {
 		// background-color: red;
 		width: 80%;
