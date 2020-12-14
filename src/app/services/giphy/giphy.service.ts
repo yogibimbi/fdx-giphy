@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { from, of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class GiphyService {
 	constructor(private http: HttpClient) {
 	}
 
-	search(text, page) {
-		let newObs: Observable<any> = new Observable();
+	search(text, page = {index: 0, size: 10}) {
+		// we need .size and .index from page
 		let url = `${this.url}?&api_key=${this.key}&q=${text}&limit=${page.size}&offset=${(page.index - 1) * page.size}`;
 		return this.http.get(
 			url
@@ -34,6 +34,7 @@ export class GiphyService {
 					total: total,
 					items: items
 				}
+				console.log("PAGE", page);
 				return of(page);
 			})
 		);

@@ -99,7 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	profanityCheck() {
-		this.profanity.check(this);
+		this.profanity.check(this.search).subscribe(() => {});
 	}
 
 	imageLoading(event) {

@@ -34,6 +34,8 @@ describe('AppComponent', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(AppComponent);
 		component = fixture.componentInstance;
+		component.giphy = TestBed.get(GiphyService);
+		component.profanity = TestBed.get(ProfanityService);
 		fixture.detectChanges();
 		compiled = fixture.nativeElement;
 		page = {
@@ -139,7 +141,7 @@ describe('AppComponent', () => {
 	});
 
 	// well, the number of items is limited in the service, but keep this around as a reminder
-	xit('.results should have as an overflow of elements that reflects the page size, if items > page.size', () => {
+	xit('.results should have an overflow of elements that reflects the page size, if items > page.size', () => {
 		component.page.items = [1,2,3,4, 5, 6, 7, 8, 9];
 		component.page.size = 5;
 		fixture.detectChanges();
@@ -238,7 +240,6 @@ describe('AppComponent', () => {
 		component.page.index = 3;
 		fixture.detectChanges();
 		const footer = compiled.querySelector('footer');
-		console.log("FOOTER", footer);
 		const activePage = compiled.querySelector('footer li.page-item.active');
 
 		expect(activePage.textContent).toBe("3");
@@ -284,14 +285,13 @@ describe('AppComponent', () => {
 		expect(profane).toBeFalse();
 	});
 
-	// So test "fuck" first. Do we get a boo-boo?
 
 	// Does the error message appear?
 	it('.results should have as an overflow of elements that reflects the page size, if items > page.size', () => {
 		component.page.items = [1,2,3,4, 5, 6, 7, 8, 9]; // should be overwritten by the error sequence
 		component.page.size = 5; // dto
 		component.page.total = 100;
-		component.profanity.active = false;
+		component.profanity.active = true;
 		component.updateSearch();
 		fixture.detectChanges();
 		const results = compiled.querySelector('.results');
@@ -299,37 +299,6 @@ describe('AppComponent', () => {
 
 		expect(items.length).toEqual(7);
 	});
-
-	// Test "kittens" next. Do we get the green light?
-
-	// is the error message gone?
-
-	// Test "kittens" for the giphy API. Do we get 10 results?
-
-	// Test "" for the giphy API. Do we get an empty result?
-
-	// Change the pagination length to 13 for the API and see if we get 13 results,
-	// just to make sure that the 10 from before weren't all there were.
-
-	// Remember the first item of the last test. Advance the page by 2. Does the first
-	// result change?
-
-	// Remember the first item of the last test. Do "next". Does the first
-	// result change?
-
-	// Remember the first item of the last test. Do "previous". Does the first
-	// result change?
-
-	// Remember the first item of the last test. Go back by 1. Does the first
-	// result change?
-
-	// Remember the first item of the last test. Go to "last". Does the first
-	// result change?
-
-	// Remember the first item of the last test. Go to "first". Does the first
-	// result change?
-
-	// Test "" again. See if there is still an empty result. APIs can be weird like that.
 
 	// That would be all for now. Let's see if more hunger comes while we are eating...
 });

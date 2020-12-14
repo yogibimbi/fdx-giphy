@@ -35,6 +35,7 @@
 		</button>
 	     <div ngbDropdownMenu aria-labelledby="dropdownForm1">
 	      	<div class="content-wrapper">
+		     	<!-- probably better injected by a service... -->
 	      		<p>The absolute final user manual</p>
 
 	      		<ol>
@@ -103,6 +104,6 @@
 		<ngb-progressbar *ngIf="images.loaded < page.items.length" type="primary"
 			[value]="100 * (images.loaded / page.items.length)"
 			[striped]="true"
-		></ngb-progressbar>
+		>{{ images.loaded }} loaded</ngb-progressbar>
 	</div>
 </footer>

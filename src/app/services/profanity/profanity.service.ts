@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,19 @@ export class ProfanityService {
 	constructor(private http: HttpClient) {
 	}
 
-	check(app) {
-		const term = app.search;
+	check(term) {
 		let url = `${this.url}?method=webpurify.live.check&format=json&api_key=${this.key}&text=${term}`; // webpurify
-		this.http.get(
+		console.log("IN");
+		return this.http.get(
 			url
-    	).subscribe((data) => {
-    		this.active = data['rsp'].found > 0;
-		});
+		).pipe(
+			switchMap(data => {
+				console.log("DATA", data);
+	    		this.active = data['rsp'].found > 0; // this is good enough for app.profanityCheck (which still must subscribe!)
+				return of(this.active); // this needs to be here for testing
+			})
+		);
+
 	}
 
 	getMessage = function () {	// puts a couple of standard images as a slightly undercover
