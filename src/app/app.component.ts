@@ -13,18 +13,20 @@ import { GiphyService } from './services/giphy/giphy.service';
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	title = 'fdx-giphy';
-	search = '';
+	search = ''; // current search term as entered by the user
 	page = {
-		total: 0,
+		total: 0, // total number of items in the current search
 		index: 1,
-		items: [], //0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],
-		size: 10,
-		count: 5,
-		ellipses: false,
-		rotation: true
+		items: [],
+		size: 10, // default number of items shown in one page
+		count: 5, // number of pages selectable in the paginator element
+		ellipses: false, // ellipses setting of the pagination element
+		rotation: true // dto. rotation setting
 	};
 	images = {
-		loaded: 0,
+		loaded: 0, // number of currently loaded items images;
+		// as long as it is smaller than the number of items in the search,
+		// the progress bar is shown
 	}
 
 	constructor (public profanity: ProfanityService, public giphy: GiphyService) {
@@ -32,7 +34,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	ngOnInit() {
-		let search = window.location.search;
+		let search = window.location.search; // get the current search term from  the query string
+		/*
+			this allows the profanity message disguised as a search result to work
+			with links on the images, but also, in the current implementation, is a
+			backdoor to smuggle profane searches past the profanity check. Since it
+			it is not a very obvious backdoor, I'll leave it at that for the time
+			being, however
+		*/
 		this.search = search.replace(/^\W*(\w+).*/, "$1");	// trim the garbage a bit
 		if (this.search) {
 			this.profanityCheck();
