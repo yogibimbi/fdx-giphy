@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +24,9 @@ export class ProfanityService {
 		});
 	}
 
-	setMessage(app) {	// puts a couple of standard images as a slightly undercover
-						// profanity message out in the results list
+	getMessage = function () {	// puts a couple of standard images as a slightly undercover
+		// profanity message out in the results list
+		// defining it as a property, it can be grafted to the mock services
 		const images = [
 			'orly.gif',
 			'mouth.jpg',
@@ -37,10 +37,11 @@ export class ProfanityService {
 			'kittens.gif'
 		]
 		const baseUrl = '/assets/images/';
-		app.page.items = images.map(image => {return {
+		const items = images.map(image => {return {
 			src: baseUrl + image,
 			link: 'http://' + window.location.host + "?" + image.replace(/\..*/, ''),
 			title: 'Click this for something more decent. And a better world.'
 		}});
+		return of(items);
 	}
 }

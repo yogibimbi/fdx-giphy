@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
 
-import { ProfanityService } from './profanity.service';
+import { MockProfanityService as ProfanityService } from './services/profanity/mock-profanity.service';
+import { MockGiphyService as GiphyService } from './services/giphy/mock-giphy.service';
 
 import { AppComponent } from './app.component';
 
@@ -25,7 +25,9 @@ describe('AppComponent', () => {
 				AppComponent
 			],
 			providers: [
-				HttpClient
+				HttpClient,
+				ProfanityService,
+				GiphyService
 			]
 		}).compileComponents();
 	});
@@ -110,6 +112,8 @@ describe('AppComponent', () => {
 	});
 
 	it('the vertical elements should all add up to the height of the frame', () => {
+		component.page.items = [1,2,3,4,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+		fixture.detectChanges();
 		const appRoot = compiled;
 		const header = appRoot.querySelector('header');
 		const results = appRoot.querySelector('.results');
@@ -122,6 +126,27 @@ describe('AppComponent', () => {
 		// keep the console.log around, it might still be useful
 		// console.log("heights", height(appRoot), height(header), height(results), height(footer));
 		expect(height(appRoot)).toEqual(height(header) + (height(results) +  height(footer)));
+	});
+
+	it('.results should have as many elements as there are items, if items < page.size', () => {
+		component.page.items = [1,2,3,4];
+		component.page.size = 10;
+		fixture.detectChanges();
+		const results = compiled.querySelector('.results');
+		const items = results.querySelectorAll('ul li');
+
+		expect(items.length).toEqual(4);
+	});
+
+	// well, the number of items is limited in the service, but keep this around as a reminder
+	xit('.results should have as an overflow of elements that reflects the page size, if items > page.size', () => {
+		component.page.items = [1,2,3,4, 5, 6, 7, 8, 9];
+		component.page.size = 5;
+		fixture.detectChanges();
+		const results = compiled.querySelector('.results');
+		const items = results.querySelectorAll('ul li');
+
+		expect(items.length).toEqual(4);
 	});
 
 	/* Overflow from the search list auto scrolls: If you make it very narrow or very low,
@@ -208,27 +233,72 @@ describe('AppComponent', () => {
 	});
 
 	it("page 2 should be selected if page.index is 1", () => {
+		component.search = "something";
+		component.page.total = 100;
 		component.page.index = 3;
 		fixture.detectChanges();
+		const footer = compiled.querySelector('footer');
+		console.log("FOOTER", footer);
 		const activePage = compiled.querySelector('footer li.page-item.active');
 
 		expect(activePage.textContent).toBe("3");
 	});
 
-	// Paginate first, previous, and only a window of 5 pages, next and last. If it's there, it's
-	// oK. Don't test for any funny page width / height breakdowns as long as they don't get
-	// totally annoying.
-	// All other result numbers, widths, etc., as long as there is not something totally
-	// weird going on with the pagination component, we're good. Everything else would
-	// probably require too much digging into the component. Ain't nobody got time 4 dat.
+	/* Paginate first, previous, and only a window of 5 pages, next and last. If it's there, it's
+		oK. Don't test for any funny page width / height breakdowns as long as they don't get
+		totally annoying.
+		All other result numbers, widths, etc., as long as there is not something totally
+		weird going on with the pagination component, we're good. Everything else would
+		probably require too much digging into the component. Ain't nobody got time 4 dat.
+	*/
 
-	// If it does not pass the profanity test, say something corny and don't give a result.
-	// The API I have chosen gives me 50 attempts per day for my user, so if it works apparetnly,
-	// with one word (we use everybody's darling "fuck") that's good, we won't throw the
-	// dictionary at it.
+	/* If it does not pass the profanity test, show a prepared result of motivational
+		and wholesome images.
+	*/
+
+	it("should set css class 'profane' on input and button if profanity is active", () => {
+		component.page.total = 100;
+		component.profanity.active = true;
+		component.updateSearch();
+		fixture.detectChanges();
+		const header = compiled.querySelector('header');
+		const textBox = header.querySelector('input');
+		const button = header.querySelector('button');
+
+		const profane = textBox.className.split(/ /).indexOf('profane') > -1 &&
+						button.className.split(/ /).indexOf('profane') > -1
+		expect(profane).toBeTrue();
+	});
+
+	it("should not have css class 'profane' on input and button if profanity is inactive", () => {
+		component.page.total = 100;
+		component.profanity.active = false;
+		component.updateSearch();
+		fixture.detectChanges();
+		const header = compiled.querySelector('header');
+		const textBox = header.querySelector('input');
+		const button = header.querySelector('button');
+
+		const profane = textBox.className.split(/ /).indexOf('profane') > -1 &&
+						button.className.split(/ /).indexOf('profane') > -1
+		expect(profane).toBeFalse();
+	});
+
 	// So test "fuck" first. Do we get a boo-boo?
 
 	// Does the error message appear?
+	it('.results should have as an overflow of elements that reflects the page size, if items > page.size', () => {
+		component.page.items = [1,2,3,4, 5, 6, 7, 8, 9]; // should be overwritten by the error sequence
+		component.page.size = 5; // dto
+		component.page.total = 100;
+		component.profanity.active = false;
+		component.updateSearch();
+		fixture.detectChanges();
+		const results = compiled.querySelector('.results');
+		const items = results.querySelectorAll('ul li');
+
+		expect(items.length).toEqual(7);
+	});
 
 	// Test "kittens" next. Do we get the green light?
 

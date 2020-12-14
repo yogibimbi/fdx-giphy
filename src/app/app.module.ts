@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClientJsonpModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -25,7 +25,6 @@ import { AppComponent } from './app.component';
 		NgbModule
 	],
 	providers: [
-		HttpClient,
 		ProfanityService,
 		GiphyService
 	],
