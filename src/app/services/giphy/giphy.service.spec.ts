@@ -3,6 +3,8 @@ import {
 	HttpClientTestingModule, HttpTestingController
 } from '@angular/common/http/testing';
 
+import test_data from './giphy.test-data.json';
+
 import { GiphyService } from './giphy.service';
 
 describe('GiphyService', () => {
@@ -27,12 +29,21 @@ describe('GiphyService', () => {
 	});
 
 	it('search should return something', () => {
-		/* service.search("kittens").subscribe(page => {
-			console.log("PAGE", page);
+		const text = 'puppies';
+		const page = {
+			size: 10,
+			index: 1,
+		}
+		const testData: any = test_data;	//"rsp":{"@attributes":{"stat":"ok"},"method":"webpurify.live.check","format":"rest","found":found,"api_key":"6f8fba196ac6f3ab123115463946af91"}};
+		service.search(text, page).subscribe(data => {
+			console.log("DATAx", data);
+			expect(data.items.length).toBe(10);
 		})
-		const req = httpTestingController.expectOne(service.url);
-		*/
-		// expect(service.search("kittens")).toBeFalsy();
+		const url = `${service.url}?&api_key=${service.key}&q=${text}&limit=${page.size}&offset=${(page.index - 1) * page.size}`;
+		console.log("URL", url);
+		const req = httpTestingController.expectOne(url);
+		expect(req.request.method).toEqual('GET');
+		req.flush(testData);
 	});
 
 	// Test "kittens" for the giphy API. Do we get 10 results?

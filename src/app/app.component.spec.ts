@@ -141,7 +141,7 @@ describe('AppComponent', () => {
 	});
 
 	// well, the number of items is limited in the service, but keep this around as a reminder
-	xit('.results should have an overflow of elements that reflects the page size, if items > page.size', () => {
+	it('.results should have an overflow of elements that reflects the page size, if items > page.size', () => {
 		component.page.items = [1,2,3,4, 5, 6, 7, 8, 9];
 		component.page.size = 5;
 		fixture.detectChanges();

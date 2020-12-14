@@ -2,13 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import {
 	HttpClientTestingModule, HttpTestingController
 } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 
 import { ProfanityService } from './profanity.service';
 
 describe('ProfanityService', () => {
 	let service: ProfanityService;
-	let httpClient: HttpClient;
+	// let httpClient: HttpClient;
 	let httpTestingController;
 
 	beforeEach(async () => {
@@ -19,7 +19,7 @@ describe('ProfanityService', () => {
 		});
 	});
 	beforeEach(() => {
-		httpClient = TestBed.inject(HttpClient);
+		// httpClient = TestBed.inject(HttpClient);
 		service = TestBed.inject(ProfanityService);
 		httpTestingController = TestBed.get(HttpTestingController);
 	});
@@ -36,11 +36,12 @@ describe('ProfanityService', () => {
 			expect(profane).toBeTrue();
 		})
 		const url = `${service.url}?method=webpurify.live.check&format=json&api_key=${service.key}&text=${term}`; // webpurify
+		console.log("URL", url);
 		const req = httpTestingController.expectOne(url);
 		expect(req.request.method).toEqual('GET');
 		req.flush(testData);
 	});
-	// Test "puppies" next. Do we get the green light?
+	// Test "kittens" next. Do we get the green light?
 	it('should return false if the term is not profane', () => {
 		const term = 'kittens';
 		const found = 0;
