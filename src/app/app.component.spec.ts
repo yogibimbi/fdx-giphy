@@ -140,17 +140,6 @@ describe('AppComponent', () => {
 		expect(items.length).toEqual(4);
 	});
 
-	// well, the number of items is limited in the service, but keep this around as a reminder
-	it('.results should have an overflow of elements that reflects the page size, if items > page.size', () => {
-		component.page.items = [1,2,3,4, 5, 6, 7, 8, 9];
-		component.page.size = 5;
-		fixture.detectChanges();
-		const results = compiled.querySelector('.results');
-		const items = results.querySelectorAll('ul li');
-
-		expect(items.length).toEqual(4);
-	});
-
 	/* Overflow from the search list auto scrolls: If you make it very narrow or very low,
 		I'll see if that bugs me, if not - hakuna matata.
 	*/
