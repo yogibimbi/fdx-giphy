@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ProfanityService {
 	url = '/profanity';	// the rest is done by the proxy configured in angular.json
-	user = 'yogibimbi';
+	// user = 'yogibimbi';
 	key = '6f8fba196ac6f3ab123115463946af91'; // for webpurify
 	active = false;
 
@@ -18,7 +18,6 @@ export class ProfanityService {
 	check(app) {
 		const term = app.search;
 		let url = `${this.url}?method=webpurify.live.check&format=json&api_key=${this.key}&text=${term}`; // webpurify
-		// console.log("URL", url);
 		this.http.get(
 			url
     	).subscribe((data) => {

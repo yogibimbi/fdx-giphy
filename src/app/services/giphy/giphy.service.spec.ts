@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule, HttpClientJsonpModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { GiphyService } from './giphy.service';
 
@@ -10,7 +10,6 @@ describe('GiphyService', () => {
 		await TestBed.configureTestingModule({
 			imports: [
 				HttpClientModule,
-				HttpClientJsonpModule,
 			],
 			declarations: [
 			],

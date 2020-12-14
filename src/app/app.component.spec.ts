@@ -207,7 +207,7 @@ describe('AppComponent', () => {
 		expect(paginatorItems.length).toBe(component.page.count - 1 + 4);
 	});
 
-	it("page 2 should be selected if page.indes is 1", () => {
+	it("page 2 should be selected if page.index is 1", () => {
 		component.page.index = 3;
 		fixture.detectChanges();
 		const activePage = compiled.querySelector('footer li.page-item.active');

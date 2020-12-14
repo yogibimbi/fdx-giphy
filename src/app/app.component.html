@@ -26,7 +26,7 @@
 	</nav>
 </header>
 
-<div *ngIf="page.items" class="results d-flex justify-content-center">
+<div *ngIf="page.items.length" class="results d-flex justify-content-center">
 	<ul>
 		<li *ngFor="let item of page.items; let i = index">
 			<a [href]="item.link" id="items{{page.size * (page.index - 1) + i + 1}}">
@@ -41,7 +41,7 @@
 	</ul>
 </div>
 
-<footer *ngIf="page.items" class="d-flex ">
+<footer *ngIf="page.items.length" class="d-flex ">
 	<div>
 		<div>
 			<div ngbDropdown class="d-inline-block">

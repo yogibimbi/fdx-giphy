@@ -6,8 +6,8 @@ import { HttpClientModule, HttpClientJsonpModule, HttpClient } from '@angular/co
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProfanityService } from './profanity.service';
-import { GiphyService } from './giphy.service';
+import { ProfanityService } from './services/profanity/profanity.service';
+import { GiphyService } from './services/giphy/giphy.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
