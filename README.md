@@ -8,7 +8,7 @@ Do the usual drill to install:
 
 -run npm install in the project directory
 
--there is a short set of instructions on how to use the app on the app itself, click the round (i) icon in the top right corner of the app
+-there is a short set of instructions on how to use the app on the app itself, click the round (info) icon in the top right corner of the app
 
 ## Development server
 
