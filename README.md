@@ -1,8 +1,8 @@
 # FdxGiphy
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0. As of this writing, Angular 11 was not installed, since there is no experience yet with 11, after 1 month of being final.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
 
-Do the usual drill:
+Do the usual drill to install:
 
 -check out this project or download the .zip from this github repo
 
