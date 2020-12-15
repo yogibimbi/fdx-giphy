@@ -17,12 +17,10 @@ export class ProfanityService {
 
 	check(term) {
 		let url = `${this.url}?method=webpurify.live.check&format=json&api_key=${this.key}&text=${term}`; // webpurify
-		console.log("IN");
 		return this.http.get(
 			url
 		).pipe(
 			switchMap(data => {
-				console.log("DATA", data);
 	    		this.active = data['rsp'].found > 0; // this is good enough for app.profanityCheck (which still must subscribe!)
 				return of(this.active); // this needs to be here for testing
 			})

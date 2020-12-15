@@ -34,7 +34,6 @@ export class GiphyService {
 					total: total,
 					items: items
 				}
-				console.log("PAGE", page);
 				return of(page);
 			})
 		);
