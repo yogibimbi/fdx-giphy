@@ -28,7 +28,7 @@ describe('GiphyService', () => {
 		expect(service).toBeTruthy();
 	});
 
-	it('search should return something', () => {
+	it('search should return items and totals', () => {
 		const text = 'puppies';
 		const page = {
 			size: 10,
